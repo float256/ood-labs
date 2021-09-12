@@ -8,17 +8,21 @@ fun main() {
     val rubberDuck = RubberDuck()
     val decoyDuck = DecoyDuck()
 
-    decoyDuck.fly = addFlightCounting(::flyRockedPowered)
+    val func = addFlightCounting(::flyRockedPowered)
+    decoyDuck.fly = func
 
     runAllActionsForDuck(mallardDuck)
     runAllActionsForDuck(redheadDuck)
     runAllActionsForDuck(rubberDuck)
     runAllActionsForDuck(decoyDuck)
+    func()
 }
 
 fun runAllActionsForDuck(duck: Duck) {
     duck.display()
     duck.quack()
+    duck.fly()
+    duck.fly()
     duck.fly()
     duck.swim()
     duck.dance()
