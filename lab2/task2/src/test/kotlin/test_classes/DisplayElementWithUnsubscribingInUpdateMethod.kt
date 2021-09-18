@@ -1,11 +1,9 @@
-package additional_classes
+package test_classes
 
 import display.DisplayElement
 import observer.Observer
 import observer.Subject
 import weather.WeatherMeasurement
-import java.io.ByteArrayOutputStream
-import java.io.PrintStream
 
 class DisplayElementWithUnsubscribingInUpdateMethod(
     private val observableSubject: Subject<WeatherMeasurement>
