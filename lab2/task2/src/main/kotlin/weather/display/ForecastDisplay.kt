@@ -5,15 +5,12 @@ import observer.Observer
 import observer.Subject
 import weather.WeatherMeasurement
 
-class ForecastDisplay(
-    observableSubject: Subject<WeatherMeasurement>,
-    priority: Int
-) : DisplayElement, Observer<WeatherMeasurement> {
+class ForecastDisplay(observableSubject: Subject<WeatherMeasurement>) : DisplayElement, Observer<WeatherMeasurement> {
     private var currentPressure = 29.92
     private var lastPressure = 0.0
 
     init {
-        observableSubject.registerObserver(this, priority)
+        observableSubject.registerObserver(this)
     }
 
     override fun display() {

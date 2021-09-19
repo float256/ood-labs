@@ -1,4 +1,4 @@
-import test_classes.task2.DisplayElementWithUnsubscribingInUpdateMethod
+import test_classes.DisplayElementWithUnsubscribingInUpdateMethod
 import org.junit.Assert
 import org.junit.Test
 import weather.WeatherData

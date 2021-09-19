@@ -9,13 +9,13 @@ import weather.display.statistics.TemperatureStatisticsDisplay
 
 fun main() {
     val weatherData = WeatherData()
-    CurrentConditionsDisplay(weatherData, 2)
-    ForecastDisplay(weatherData, 1)
-    HeatIndexDisplay(weatherData, 3)
+    CurrentConditionsDisplay(weatherData)
+    ForecastDisplay(weatherData)
+    HeatIndexDisplay(weatherData)
 
-    HumidityStatisticsDisplay(weatherData, 6)
-    PressureStatisticsDisplay(weatherData, 5)
-    TemperatureStatisticsDisplay(weatherData, 4)
+    HumidityStatisticsDisplay(weatherData)
+    PressureStatisticsDisplay(weatherData)
+    TemperatureStatisticsDisplay(weatherData)
 
     weatherData.setMeasurements(WeatherMeasurement(80.0, 65.0, 30.4))
     println()
