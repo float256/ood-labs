@@ -1,12 +1,14 @@
 package weather
 
 import observer.Observer
+import observer.ObserverWithPriority
 import observer.Subject
+import java.util.*
+import kotlin.collections.HashSet
 
 class WeatherData : Subject<WeatherMeasurement> {
     private var currentMeasurement: WeatherMeasurement = WeatherMeasurement()
-    private var allObservers: MutableSet<Observer<WeatherMeasurement>> = HashSet()
-
+    private var allObservers: SortedSet<ObserverWithPriority<WeatherMeasurement>> = TreeSet()
 
     fun setMeasurements(weatherMeasurement: WeatherMeasurement) {
         currentMeasurement = weatherMeasurement
@@ -17,17 +19,18 @@ class WeatherData : Subject<WeatherMeasurement> {
         notifyObservers()
     }
 
-    override fun registerObserver(observer: Observer<WeatherMeasurement>) {
-        allObservers.add(observer)
+    override fun registerObserver(observer: Observer<WeatherMeasurement>, priority: Int) {
+        removeObserver(observer)
+        allObservers.add(ObserverWithPriority(observer, priority))
     }
 
     override fun removeObserver(observer: Observer<WeatherMeasurement>) {
-        allObservers.remove(observer)
+        allObservers.remove(ObserverWithPriority(observer, 0))
     }
 
     override fun notifyObservers() {
-        allObservers.toMutableSet().forEach {
-            it.update(currentMeasurement)
+        allObservers.toSortedSet().forEach {
+            it.observer.update(currentMeasurement)
         }
     }
 }

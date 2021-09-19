@@ -1,4 +1,4 @@
-package test_classes
+package test_classes.task2
 
 import display.DisplayElement
 import observer.Observer

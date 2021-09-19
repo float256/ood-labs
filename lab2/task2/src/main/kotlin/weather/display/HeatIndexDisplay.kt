@@ -6,11 +6,14 @@ import observer.Subject
 import weather.WeatherMeasurement
 import kotlin.math.pow
 
-class HeatIndexDisplay(observableSubject: Subject<WeatherMeasurement>) : DisplayElement, Observer<WeatherMeasurement> {
+class HeatIndexDisplay(
+    observableSubject: Subject<WeatherMeasurement>,
+    priority: Int
+) : DisplayElement, Observer<WeatherMeasurement> {
     private var heatIndex = 0.0
 
     init {
-        observableSubject.registerObserver(this)
+        observableSubject.registerObserver(this, priority)
     }
 
     override fun update(newData: WeatherMeasurement) {

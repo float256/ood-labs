@@ -5,11 +5,14 @@ import observer.Observer
 import observer.Subject
 import weather.WeatherMeasurement
 
-class CurrentConditionsDisplay(observableSubject: Subject<WeatherMeasurement>) :
+class CurrentConditionsDisplay(
+    observableSubject: Subject<WeatherMeasurement>,
+    priority: Int
+) :
     DisplayElement, Observer<WeatherMeasurement> {
 
     init {
-        observableSubject.registerObserver(this)
+        observableSubject.registerObserver(this, priority)
     }
 
     private var currentMeasurement: WeatherMeasurement = WeatherMeasurement()

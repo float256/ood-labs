@@ -4,11 +4,14 @@ import display.StatisticsDisplay
 import observer.Subject
 import weather.WeatherMeasurement
 
-class HumidityStatisticsDisplay(observableSubject: Subject<WeatherMeasurement>) :
+class HumidityStatisticsDisplay(
+    observableSubject: Subject<WeatherMeasurement>,
+    priority: Int
+) :
     StatisticsDisplay<WeatherMeasurement>() {
 
     init {
-        observableSubject.registerObserver(this)
+        observableSubject.registerObserver(this, priority)
     }
 
     override fun getParameterName() = "humidity"
