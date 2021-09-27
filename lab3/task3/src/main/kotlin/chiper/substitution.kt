@@ -1,12 +1,13 @@
 package chiper
 
 import java.util.*
+import kotlin.math.abs
 
 
 internal fun getSubstitutionTable(key: Long): Map<Int, Int> {
-    return (0..255)
+    return (Byte.MIN_VALUE..Byte.MAX_VALUE)
         .shuffled(Random(key))
-        .mapIndexed { index, item -> Pair(index, item) }
+        .mapIndexed { index, item -> Pair(index + Byte.MIN_VALUE, item) }
         .toMap()
 }
 
