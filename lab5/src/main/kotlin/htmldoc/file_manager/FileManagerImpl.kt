@@ -10,11 +10,11 @@ class FileManagerImpl: FileManager {
         Files.copy(from, to)
     }
 
-    override fun removeFile(path: Path) {
+    override fun remove(path: Path) {
         path.toFile().delete()
     }
 
-    override fun isFolder(path: Path): Boolean {
+    override fun isDirectory(path: Path): Boolean {
         return path.toFile().isDirectory
     }
 

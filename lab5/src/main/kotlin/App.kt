@@ -1,5 +1,3 @@
-package client
-
 import htmldoc.HtmlDoc
 import htmldoc.HtmlDocImpl
 import htmldoc.htmlgenerator.HtmlGeneratorImpl
@@ -13,7 +11,7 @@ import java.io.PrintStream
 import java.nio.file.Path
 import java.util.*
 
-class Client(
+class App(
     private val inputStream: InputStream,
     private val outputStream: PrintStream,
 ) {

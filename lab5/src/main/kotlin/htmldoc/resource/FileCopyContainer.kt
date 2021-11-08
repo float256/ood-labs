@@ -14,7 +14,7 @@ class FileCopyContainer(
 
     init {
         if (fileManager.isExists(resourceDirectory)) {
-            if (!fileManager.isFolder(resourceDirectory)) {
+            if (!fileManager.isDirectory(resourceDirectory)) {
                 throw IllegalArgumentException("Incorrect path to resource directory")
             }
         } else {
@@ -27,7 +27,7 @@ class FileCopyContainer(
     }
 
     override fun copy(pathToOriginal: Path): Path {
-        if (fileManager.isFolder(pathToOriginal)) {
+        if (fileManager.isDirectory(pathToOriginal)) {
             throw IllegalArgumentException("The specified path is not a file")
         }
         if (!copies.containsKey(pathToOriginal)) {
@@ -50,7 +50,7 @@ class FileCopyContainer(
         if (copies.containsKey(pathToOriginal)) {
             numberOfLinksOnCopy[pathToOriginal] = numberOfLinksOnCopy.getOrDefault(pathToOriginal, 1) - 1
             if (numberOfLinksOnCopy[pathToOriginal] == 0) {
-                fileManager.removeFile(copies[pathToOriginal]!!)
+                fileManager.remove(copies[pathToOriginal]!!)
                 markedForRemove.remove(pathToOriginal)
                 numberOfLinksOnCopy.remove(pathToOriginal)
                 copies.remove(pathToOriginal)

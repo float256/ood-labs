@@ -44,11 +44,14 @@ class HistoryImpl : History {
 
     private fun removeOutOfHistoryCommands() {
         if (canRedo()) {
-            history.subList(position + 1, history.size).forEach { it.dispose() }
-            history.subList(position + 1, history.size).clear()
+            val deletedItems = history.subList(position + 1, history.size)
+            deletedItems.reversed().forEach { it.dispose() }
+            deletedItems.clear()
         }
-        if (history.size > HtmlDocConstants.HISTORY_MAX_LENGTH) {
-            history.subList(0, history.size - HtmlDocConstants.HISTORY_MAX_LENGTH).clear()
+        if (history.size >= HtmlDocConstants.HISTORY_MAX_LENGTH) {
+            val deletedItems = history.subList(0, history.size - HtmlDocConstants.HISTORY_MAX_LENGTH + 1)
+            deletedItems.forEach { it.dispose() }
+            deletedItems.clear()
         }
     }
 }

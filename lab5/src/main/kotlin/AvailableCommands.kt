@@ -1,5 +1,3 @@
-package client
-
 enum class AvailableCommands {
     InsertParagraph,
     InsertImage,

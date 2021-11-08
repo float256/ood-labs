@@ -3,8 +3,8 @@ package htmldoc.command
 abstract class OneExecutableCommand: Command {
     private var isExecuted: Boolean = false
 
-    abstract fun executeImpl()
-    abstract fun undoImpl()
+    protected abstract fun executeImpl()
+    protected abstract fun undoImpl()
 
     override fun execute() = when(isExecuted) {
         false -> {
