@@ -33,8 +33,8 @@ class HasQuarterState(
     }
 
     override fun fillMachine(numberOfGumballs: UInt) {
-        out.println("You added $numberOfGumballs balls, now there are ${machine.getBallCount()} of them.")
         machine.addBalls(numberOfGumballs)
+        out.println("You added $numberOfGumballs balls, now there are ${machine.getBallCount()} of them.")
     }
 
     override fun toString(): String {
