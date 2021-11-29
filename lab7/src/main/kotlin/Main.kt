@@ -21,7 +21,7 @@ private fun drawSampleSlide(canvas: Canvas) {
         Rectangle(Point(300.0, 50.0), 250.0, 200.0,
             RGBAColorConstants.BLACK, StrokeParameters(RGBAColorConstants.GREEN, 3.3)),
         Rectangle(Point(275.0, 175.0), 250.0, 200.0,
-            RGBAColorConstants.FULLY_TRANSPARENT, StrokeParameters(RGBAColorConstants.BLUE, 3.3)),
+            null, StrokeParameters(RGBAColorConstants.BLUE, 3.3)),
         Rectangle(Point(250.0, 300.0), 250.0, 200.0,
             RGBAColorConstants.WHITE, StrokeParameters(RGBAColorConstants.FULLY_TRANSPARENT, 3.3))
     )

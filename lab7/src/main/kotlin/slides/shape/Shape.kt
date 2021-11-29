@@ -9,9 +9,9 @@ interface Shape {
     fun setFrame(newFrame: Frame)
 
     fun getFillColor(): RGBAColor?
-    fun setFillColor(newColor: RGBAColor)
+    fun setFillColor(newColor: RGBAColor?)
 
-    fun getStroke(): StrokeParameters?
+    fun getStroke(): StrokeParameters
     fun setStroke(newStroke: StrokeParameters)
 
     fun draw(canvas: Canvas)

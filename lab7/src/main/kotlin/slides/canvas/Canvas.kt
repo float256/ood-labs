@@ -1,7 +1,7 @@
 package slides.canvas
 
 interface Canvas: AutoCloseable {
-    var fillColor: RGBAColor
+    var fillColor: RGBAColor?
     var strokeParameters: StrokeParameters
 
     fun drawLine(start: Point, end: Point)

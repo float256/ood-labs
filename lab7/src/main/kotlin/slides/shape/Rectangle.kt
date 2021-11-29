@@ -9,7 +9,7 @@ class Rectangle(
     private var leftTop: Point,
     private var width: Double,
     private var height: Double,
-    fillColor: RGBAColor,
+    fillColor: RGBAColor?,
     strokeParameters: StrokeParameters
 ) : PrimitiveShape(fillColor, strokeParameters) {
 

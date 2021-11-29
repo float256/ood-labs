@@ -9,7 +9,7 @@ class Ellipse(
     private var center: Point,
     private var width: Double,
     private var height: Double,
-    fillColor: RGBAColor,
+    fillColor: RGBAColor?,
     strokeParameters: StrokeParameters
 ) : PrimitiveShape(fillColor, strokeParameters) {
 

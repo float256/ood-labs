@@ -15,34 +15,40 @@ class CompositeShapeImpl : CompositeShape {
     }
 
     override fun add(shape: Shape, position: Int) {
-        if (isAdded(shape)) {
+        if (isChild(shape)) {
             throw IllegalArgumentException("This shape was already added")
         }
         if ((shape is CompositeShape) && isParent(shape)) {
             throw IllegalArgumentException("This shape is parent")
         }
+        if (this === shape) {
+            throw IllegalArgumentException("Adding shape inside itself is not allowed")
+        }
         allShapes.add(position, shape)
     }
 
-    override fun remove(shape: Shape) {
-        allShapes.remove(shape)
+    override fun remove(position: Int) {
+        allShapes.removeAt(position)
     }
 
-    override fun getAllShapes(position: Int): List<Shape> {
+    override fun getAllShapes(): List<Shape> {
         return allShapes.toList()
     }
 
-    override fun isAdded(shape: Shape): Boolean {
+    override fun isChild(shape: Shape): Boolean {
         return allShapes.any {
-            when (it) {
-                is CompositeShape -> it.isAdded(shape)
-                else -> false
+            if (it === shape) {
+                true
+            } else if (it is CompositeShape) {
+                return it.isChild(shape)
+            } else {
+                false
             }
         }
     }
 
     override fun isParent(shape: CompositeShape): Boolean {
-        return shape.isAdded(this)
+        return shape.isChild(this)
     }
 
     override fun getFrame(): Frame? {
@@ -92,24 +98,38 @@ class CompositeShapeImpl : CompositeShape {
         return null
     }
 
-    override fun setFillColor(newColor: RGBAColor) {
+    override fun setFillColor(newColor: RGBAColor?) {
         allShapes.forEach { it.setFillColor(newColor) }
     }
 
-    override fun getStroke(): StrokeParameters? {
-        if (allShapes.isNotEmpty()) {
-            val allStrokeParameters = allShapes.mapNotNull { it.getStroke() }
-            val uniqueStrokeParameters = allStrokeParameters.distinct()
-            return when (uniqueStrokeParameters.size) {
-                1 -> uniqueStrokeParameters.first()
-                else -> null
-            }
+    override fun getStroke(): StrokeParameters {
+        val allStrokeWidths = allShapes.mapNotNull { it.getStroke().width }
+        val allStrokeColors = allShapes.mapNotNull { it.getStroke().color }
+
+        val uniqueStrokeWidth = allStrokeWidths.distinct()
+        val width = when (uniqueStrokeWidth.size) {
+            1 -> uniqueStrokeWidth.first()
+            else -> null
         }
-        return null
+
+        val uniqueStrokeColor = allStrokeColors.distinct()
+        val color = when (uniqueStrokeColor.size) {
+            1 -> uniqueStrokeColor.first()
+            else -> null
+        }
+        return StrokeParameters(color, width)
     }
 
     override fun setStroke(newStroke: StrokeParameters) {
-        allShapes.forEach { it.setStroke(newStroke) }
+        allShapes.forEach {
+            val currStroke = it.getStroke()
+            it.setStroke(
+                StrokeParameters(
+                    newStroke.color ?: currStroke.color,
+                    newStroke.width ?: currStroke.width
+                )
+            )
+        }
     }
 
     override fun draw(canvas: Canvas) {

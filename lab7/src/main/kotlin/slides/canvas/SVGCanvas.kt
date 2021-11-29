@@ -8,7 +8,7 @@ class SVGCanvas(
 ) : Canvas {
     private var isDrawEnded = false
 
-    override var fillColor: RGBAColor = RGBAColorConstants.FULLY_TRANSPARENT
+    override var fillColor: RGBAColor? = RGBAColorConstants.FULLY_TRANSPARENT
     override var strokeParameters = StrokeParameters(RGBAColorConstants.WHITE, 1.0)
 
     init {
@@ -21,7 +21,7 @@ class SVGCanvas(
             """
             <line x1="${start.x}" y1="${start.y}" 
                   x2="${start.x}"  y2="${start.y}"
-                  stroke="${strokeParameters.color}" stroke-width="${strokeParameters.width}" />
+                  ${getStrokeAsSVG(strokeParameters)} ${getFillColorAsSVG(fillColor)} />
             """.trimIndent()
         )
     }
@@ -31,7 +31,7 @@ class SVGCanvas(
         out.println(
             """
             <ellipse cx="${center.x}" cy="${center.y}" rx="${width / 2}" ry="${height / 2}"
-                stroke="${strokeParameters.color}" stroke-width="${strokeParameters.width}" fill="$fillColor" />
+                ${getStrokeAsSVG(strokeParameters)} ${getFillColorAsSVG(fillColor)} />
             """.trimIndent()
         )
     }
@@ -41,7 +41,7 @@ class SVGCanvas(
         out.println(
             """
             <polyline points="${points.joinToString(" ")}" 
-                stroke="${strokeParameters.color}" stroke-width="${strokeParameters.width}" fill="$fillColor" />
+                ${getStrokeAsSVG(strokeParameters)} ${getFillColorAsSVG(fillColor)} />
             """.trimIndent()
         )
     }
@@ -50,6 +50,23 @@ class SVGCanvas(
         if (isDrawEnded) {
             throw UnsupportedOperationException("Drawing was finished")
         }
+    }
+
+    private fun getStrokeAsSVG(strokeParameters: StrokeParameters): String {
+        if ((strokeParameters.width != null) && (strokeParameters.color != null)) {
+            return """
+                stroke="${strokeParameters.color}" stroke-width="${strokeParameters.width}"
+                """.trimIndent()
+        } else {
+            return ""
+        }
+    }
+
+    private fun getFillColorAsSVG(fillColor: RGBAColor?): String {
+        val color = fillColor ?: RGBAColorConstants.FULLY_TRANSPARENT
+        return """
+                fill="$color"
+                """.trimIndent()
     }
 
     override fun close() {
