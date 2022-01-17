@@ -18,8 +18,9 @@ repositories {
 
 dependencies {
     implementation("io.reactivex.rxjava3:rxjava:3.1.3")
-    testImplementation(kotlin("test"))
+    implementation("br.com.devsrsouza.compose.icons.jetbrains:feather:1.0.0")
     implementation(compose.desktop.currentOs)
+    testImplementation(kotlin("test"))
 }
 
 tasks.test {
@@ -29,6 +30,7 @@ tasks.test {
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "11"
 }
+
 
 compose.desktop {
     application {
