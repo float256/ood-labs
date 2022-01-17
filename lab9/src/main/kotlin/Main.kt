@@ -7,7 +7,7 @@ import androidx.compose.ui.window.application
 import application.CanvasAppModel
 import application.SelectionAppModel
 import application.usecase.create.CreateShapeUseCase
-import application.usecase.delete.DeleteShapeUseCase
+import application.usecase.delete.DeleteSelectedShapeUseCase
 import application.usecase.move.MoveShapeUseCaseFactory
 import application.usecase.undo.UndoUseCase
 import domain.canvas.Canvas
@@ -27,10 +27,10 @@ fun app() {
 
     val moveShapeUseCaseFactory = MoveShapeUseCaseFactory(history)
     val createShapeUseCase = CreateShapeUseCase(canvasAppModel, history)
-    val deleteShapeUseCase = DeleteShapeUseCase(canvasAppModel, selectionAppModel, history)
+    val deleteShapeUseCase = DeleteSelectedShapeUseCase(canvasAppModel, selectionAppModel, history)
     val undoUseCase = UndoUseCase(history)
 
-    val canvasViewModel = CanvasViewModel(canvasAppModel, selectionAppModel)
+    val canvasViewModel = CanvasViewModel(canvasAppModel, selectionAppModel, moveShapeUseCaseFactory)
     val navbarViewModel = NavbarViewModel(createShapeUseCase, deleteShapeUseCase, undoUseCase, selectionAppModel)
 
     DesktopMaterialTheme {
@@ -39,8 +39,8 @@ fun app() {
                 Navbar(navbarViewModel)
             }
         ) {
+            CanvasView(canvasViewModel)
         }
-        CanvasView(canvasViewModel, moveShapeUseCaseFactory)
     }
 }
 

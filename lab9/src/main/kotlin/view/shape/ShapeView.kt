@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.input.pointer.consumeAllChanges
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
@@ -23,7 +24,8 @@ fun ShapeView(shapeViewModel: ShapeViewModel) {
     val offset = shapeViewModel.state.value.leftTop
     val shape = when (shapeViewModel.type) {
         ShapeType.Ellipse -> EllipseShape()
-        else -> throw IllegalArgumentException()
+        ShapeType.Triangle -> TriangleShape()
+        ShapeType.Rectangle -> RectangleShape
     }
 
     Box(
@@ -46,11 +48,10 @@ fun ShapeView(shapeViewModel: ShapeViewModel) {
                         shapeViewModel.onDrag(dragAmount.x, dragAmount.y)
                     }
                 )
-            }.clickable(
-            ) {
-
+            }.clickable {
+                shapeViewModel.onClick()
             }
             .background(Color.White)
-            .border(2.dp, Color.Gray, CircleShape)
+            .border(2.dp, Color.Gray, shape)
     )
 }
