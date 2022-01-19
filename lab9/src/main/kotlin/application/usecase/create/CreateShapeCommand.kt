@@ -11,17 +11,18 @@ import history.Command
 class CreateShapeCommand(
     private val canvas: Canvas,
     private val position: Int,
-    private val shapeType: ShapeType
+    shapeType: ShapeType
 ): Command {
+    val newShape = Shape(
+        Frame(
+            Point(ShapeDefaultParameters.LeftTopX, ShapeDefaultParameters.LeftTopY),
+            Size(ShapeDefaultParameters.Width, ShapeDefaultParameters.Height)
+        ),
+        shapeType
+    )
+
     override fun doAction() {
-        val shape = Shape(
-            Frame(
-                Point(ShapeDefaultParameters.LeftTopX, ShapeDefaultParameters.LeftTopY),
-                Size(ShapeDefaultParameters.Width, ShapeDefaultParameters.Height)
-            ),
-            shapeType
-        )
-        canvas.addShape(shape, position)
+        canvas.addShape(newShape, position)
     }
 
     override fun undoAction() {

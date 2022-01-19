@@ -2,8 +2,10 @@ import androidx.compose.desktop.DesktopMaterialTheme
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
+import androidx.compose.ui.window.rememberWindowState
 import application.CanvasAppModel
 import application.SelectionAppModel
 import application.usecase.create.CreateShapeUseCase
@@ -12,9 +14,9 @@ import application.usecase.move.MoveShapeUseCaseFactory
 import application.usecase.undo.UndoUseCase
 import domain.canvas.Canvas
 import history.History
-import view.canvas.CanvasView
+import view.canvas.canvasView
 import view.canvas.CanvasViewModel
-import view.navbar.Navbar
+import view.navbar.navbar
 import view.navbar.NavbarViewModel
 
 @Composable
@@ -25,7 +27,8 @@ fun app() {
     val canvasAppModel = CanvasAppModel(canvas)
     val selectionAppModel = SelectionAppModel()
 
-    val moveShapeUseCaseFactory = MoveShapeUseCaseFactory(history)
+    val moveShapeUseCaseFactory = MoveShapeUseCaseFactory(
+        WindowConfig.CanvasWidth, WindowConfig.CanvasHeight, history)
     val createShapeUseCase = CreateShapeUseCase(canvasAppModel, history)
     val deleteShapeUseCase = DeleteSelectedShapeUseCase(canvasAppModel, selectionAppModel, history)
     val undoUseCase = UndoUseCase(history)
@@ -36,16 +39,24 @@ fun app() {
     DesktopMaterialTheme {
         Scaffold(
             bottomBar = {
-                Navbar(navbarViewModel)
+                navbar(WindowConfig.BottomBarHeight.dp, navbarViewModel)
             }
         ) {
-            CanvasView(canvasViewModel)
+            canvasView(canvasViewModel)
         }
     }
 }
 
 fun main() = application {
-    Window(onCloseRequest = ::exitApplication) {
+    val state = rememberWindowState(
+        width = WindowConfig.CanvasWidth.dp,
+        height = WindowConfig.CanvasHeight.dp + WindowConfig.BottomBarHeight.dp
+    )
+    Window(onCloseRequest = ::exitApplication,
+        state = state,
+        title = WindowConfig.Title,
+        resizable = false
+    ) {
         app()
     }
 }

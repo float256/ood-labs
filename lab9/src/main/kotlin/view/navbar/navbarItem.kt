@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
 
 @Composable
-fun NavbarItem(rowScope: RowScope, icon: ImageVector, label: String, isActive: Boolean = true, onClick: () -> Unit) {
+fun navbarItem(rowScope: RowScope, icon: ImageVector, label: String, isActive: Boolean = true, onClick: () -> Unit) {
     rowScope.BottomNavigationItem(
         icon = { Icon(icon, "") },
         label = { Text(label) },

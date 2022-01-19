@@ -30,20 +30,18 @@ class ShapeViewModel(
     }
 
     fun onDragStart() {
-        useCase = useCase ?: moveShapeUseCaseFactory.create(shape)
+        useCase = moveShapeUseCaseFactory.create(shape)
         selectionAppModel.selectedShape = null
     }
 
     fun onDrag(offsetX: Float, offsetY: Float) {
         val prevFrame = state.value
+
+        useCase!!.move(offsetX, offsetY)
         state.value = Frame(
-            Point(
-                prevFrame.leftTop.x + offsetX,
-                prevFrame.leftTop.y + offsetY
-            ),
+            Point(useCase!!.newLeftTopX, useCase!!.newLeftTopY),
             prevFrame.size
         )
-        useCase?.move(offsetX, offsetY)
     }
 
     fun onClick() {
