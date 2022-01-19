@@ -18,6 +18,8 @@ import view.canvas.canvasView
 import view.canvas.CanvasViewModel
 import view.navbar.navbar
 import view.navbar.NavbarViewModel
+import view.selection.SelectionViewModel
+import view.selection.selection
 
 @Composable
 @Preview
@@ -35,6 +37,7 @@ fun app() {
 
     val canvasViewModel = CanvasViewModel(canvasAppModel, selectionAppModel, moveShapeUseCaseFactory)
     val navbarViewModel = NavbarViewModel(createShapeUseCase, deleteShapeUseCase, undoUseCase, selectionAppModel)
+    val selectionViewModel = SelectionViewModel(selectionAppModel)
 
     DesktopMaterialTheme {
         Scaffold(
@@ -43,6 +46,7 @@ fun app() {
             }
         ) {
             canvasView(canvasViewModel)
+            selection(selectionViewModel)
         }
     }
 }

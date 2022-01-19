@@ -21,6 +21,7 @@ class NavbarViewModel(
         undoUseCase.doOnHistoryChanged {
             isUndoButtonActive.value = undoUseCase.canUndo()
             isRedoButtonActive.value = undoUseCase.canRedo()
+            selectionAppModel.selectedShape = null
         }
         selectionAppModel.doOnSelectionChange { newSelectedShape ->
             isDeleteButtonActive.value = (newSelectedShape != null)
